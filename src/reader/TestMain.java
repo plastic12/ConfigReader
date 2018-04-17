@@ -8,7 +8,8 @@ public class TestMain
 	public static String testfile="data.txt";
 	public static void main(String[] args)
 	{
-		checkInit();
+		//checkInit();
+		test();
 	}
 	/*
 	public static void checkWrite()
@@ -40,6 +41,27 @@ public class TestMain
 		for(Map.Entry<String, String> entry:map.entrySet())
 		{
 			System.out.println("Key="+entry.getKey()+" Value="+entry.getValue());
+		}
+	}
+	public static void test()
+	{
+		TreeMap<String,String>  map= new TreeMap<String,String>();
+		map.put("a", "20");
+		map.put("b", "20");
+		map.put("c", "20");
+		MapControl mc=new MapControl("data.txt",map);
+		Map<String,String> prompt=mc.read();
+		promptMap(prompt);
+		mc.change("a", "200");
+		prompt=mc.read();
+		promptMap(prompt);
+		mc.write();
+	}
+	public static void promptMap(Map<String,String> map)
+	{
+		for(Map.Entry<String, String> entry:map.entrySet())
+		{
+			System.out.println("Key:"+entry.getKey()+" Value:"+entry.getValue());
 		}
 	}
 

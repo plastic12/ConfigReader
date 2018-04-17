@@ -16,7 +16,7 @@ import java.util.TreeMap;
 
 public class SimpleConf 
 {
-	private static void write(Map<String,String> map,String filename)
+	public static void write(Map<String,String> map,String filename)
 	{
 		try(PrintWriter out=new PrintWriter(Files.newOutputStream(Paths.get(filename), CREATE)))
 		{
@@ -29,7 +29,7 @@ public class SimpleConf
 			e.printStackTrace();
 		}
 	}
-	private static Map<String,String> read(String filename)
+	public static Map<String,String> read(String filename)
 	{
 		try(BufferedReader reader=new BufferedReader(new FileReader(new File(filename))))
 		{
