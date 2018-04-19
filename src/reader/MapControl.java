@@ -18,9 +18,9 @@ public class MapControl
 		needChange=false;
 		map=filterRead(SimpleConf.read(filename),defaultMap);
 	}
-	public Map<String,String> read()
+	public String read(String key)
 	{
-		return map;
+		return map.get(key);
 	}
 	public void change(String key,String value)
 	{
@@ -53,7 +53,6 @@ public class MapControl
 	}
 	public static Map<String,String> filterRead(Map<String,String> input,Map<String,String> filter)
 	{
-
 		TreeMap<String,String> output = new TreeMap<String,String>();
 		for (Entry<String, String> entry : filter.entrySet())
 		{

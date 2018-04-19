@@ -31,6 +31,10 @@ public class SimpleConf
 	}
 	public static Map<String,String> read(String filename)
 	{
+		if(!Files.exists(Paths.get(filename)))
+		{
+			return new TreeMap<String,String>();
+		}
 		try(BufferedReader reader=new BufferedReader(new FileReader(new File(filename))))
 		{
 			Map<String,String> output=new TreeMap<String,String>();
