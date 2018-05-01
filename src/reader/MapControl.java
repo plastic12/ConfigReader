@@ -11,7 +11,7 @@ public class MapControl
 	private Map<String,String> map;
 	private boolean needChange;
 	private String filename;
-	
+
 	public MapControl(String filename,Map<String,String> defaultMap)
 	{
 		this.filename=filename;
@@ -54,16 +54,25 @@ public class MapControl
 	public static Map<String,String> filterRead(Map<String,String> input,Map<String,String> filter)
 	{
 		TreeMap<String,String> output = new TreeMap<String,String>();
-		for (Entry<String, String> entry : filter.entrySet())
+		if(input==null)
 		{
-			String data=input.get(entry.getKey());
-			if(data!=null)
+			//clone a filter object
+			for(Entry<String,String>entry:filter.entrySet())
+				output.put(entry.getKey(), entry.getValue());
+		}
+		else
+		{
+			for (Entry<String, String> entry : filter.entrySet())
 			{
-				output.put(entry.getKey(), data);
-			}
-			else
-			{
-				output.put(entry.getKey(),entry.getValue());
+				String data=input.get(entry.getKey());
+				if(data!=null)
+				{
+					output.put(entry.getKey(), data);
+				}
+				else
+				{
+					output.put(entry.getKey(),entry.getValue());
+				}
 			}
 		}
 		return output;

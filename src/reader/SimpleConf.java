@@ -21,7 +21,7 @@ public class SimpleConf
 		try(PrintWriter out=new PrintWriter(Files.newOutputStream(Paths.get(filename), CREATE)))
 		{
 			for (Map.Entry<String, String> entry : map.entrySet()) {    
-			    out.println(entry.getKey() + "=" + entry.getValue());
+				out.println(entry.getKey() + "=" + entry.getValue());
 			}
 		}
 		catch(IOException e)
@@ -31,37 +31,38 @@ public class SimpleConf
 	}
 	public static Map<String,String> read(String filename)
 	{
-		if(!Files.exists(Paths.get(filename)))
+		if(Files.exists(Paths.get(filename)))
 		{
-			return new TreeMap<String,String>();
-		}
-		try(BufferedReader reader=new BufferedReader(new FileReader(new File(filename))))
-		{
-			Map<String,String> output=new TreeMap<String,String>();
-			String line=null;
-			while((line=reader.readLine())!=null)
+			try(BufferedReader reader=new BufferedReader(new FileReader(new File(filename))))
 			{
-				String[] temp=line.split("=");
-				if(temp.length!=2)
+				Map<String,String> output=new TreeMap<String,String>();
+				String line=null;
+				while((line=reader.readLine())!=null)
 				{
-					System.out.println("The filetype is not support");
-					return null;
+					if(line.length()==0)
+						continue;
+					String[] temp=line.split("=");
+					if(temp.length!=2)
+					{
+						System.out.println("The filetype is not support");
+						break;
+					}
+					else
+					{
+						output.put(temp[0], temp[1]);
+					}
 				}
-				else
-				{
-					output.put(temp[0], temp[1]);
-				}
+				return output;
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return output;
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		return null;
+		return new TreeMap<String,String>();
 	}
 	public static Map<String,String> initFile(Map<String,String> def,String filename)
 	{

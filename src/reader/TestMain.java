@@ -1,5 +1,12 @@
 package reader;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,7 +16,7 @@ public class TestMain
 	public static void main(String[] args)
 	{
 		//checkInit();
-		test();
+		checkInit();
 	}
 	/*
 	public static void checkWrite()
@@ -45,17 +52,44 @@ public class TestMain
 	}
 	public static void test()
 	{
-		TreeMap<String,String>  map= new TreeMap<String,String>();
-		map.put("a", "20");
-		map.put("b", "20");
-		map.put("c", "20");
-		MapControl mc=new MapControl("data.txt",map);
-		Map<String,String> prompt=mc.read();
-		promptMap(prompt);
-		mc.change("a", "200");
-		prompt=mc.read();
-		promptMap(prompt);
-		mc.write();
+
+		if(!Files.exists(Paths.get(testfile)))
+		{
+			return;
+		}
+		try(BufferedReader reader=new BufferedReader(new FileReader(new File(testfile))))
+		{
+			Map<String,String> output=new TreeMap<String,String>();
+			String line=null;
+			while((line=reader.readLine())!=null)
+			{
+				System.out.println(line);
+				System.out.println(line.length());
+				String[] temp=line.split("=");
+				if(temp.length!=2)
+				{
+					System.out.println("The filetype is not support");
+				}
+				/*
+				String[] temp=line.split("=");
+				if(temp.length!=2)
+				{
+					System.out.println("The filetype is not support");
+				}
+				else
+				{
+					output.put(temp[0], temp[1]);
+				}*/
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 	public static void promptMap(Map<String,String> map)
 	{
